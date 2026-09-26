@@ -24,9 +24,9 @@ Repositorio del taller grupal: análisis y exploración del dataset de predicci�
 
 ## Avance del taller
 
-- [x] Ítem 1: Descripción de los datos a utilizar
-- [x] Ítem 2: Carga de datos
-- [x] Ítem 3: Descripción de variables (cuantitativas y cualitativas)
+- [ ] Ítem 1: Descripción de los datos a utilizar
+- [ ] Ítem 2: Carga de datos
+- [ ] Ítem 3: Descripción de variables (cuantitativas y cualitativas)
 - [ ] Ítem 4: Valores nulos y datos atípicos
 - [ ] Ítem 5.1: Análisis de variables demográficas/sensibles (gráficos)
 - [ ] Ítem 5.2: Análisis de intersecciones de subpoblaciones
