@@ -22,3 +22,7 @@ Repositorio del taller grupal: análisis y exploración del dataset de predicci�
 └── docs/         → PDF final del notebook ejecutado (entrega final)
 ```
 
+## Ruta de cada archivo
+
+- En cada notebook del taller se cambio la ruta de los archivo de la carpeta /data, agregando dos puntos al final **"../data/breast_cancer_prediction.csv"**, lo que significa que que subimos un nivel en la estrcutura de las carpetas, esto se hizo para no tener problemas con la ruta de la base de datos.
+
