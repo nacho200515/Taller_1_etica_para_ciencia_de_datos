@@ -22,14 +22,3 @@ Repositorio del taller grupal: análisis y exploración del dataset de predicci�
 └── docs/         → PDF final del notebook ejecutado (entrega final)
 ```
 
-## Avance del taller
-
-- [ ] Ítem 1: Descripción de los datos a utilizar
-- [ ] Ítem 2: Carga de datos
-- [ ] Ítem 3: Descripción de variables (cuantitativas y cualitativas)
-- [ ] Ítem 4: Valores nulos y datos atípicos
-- [ ] Ítem 5.1: Análisis de variables demográficas/sensibles (gráficos)
-- [ ] Ítem 5.2: Análisis de intersecciones de subpoblaciones
-- [ ] Ítem 6: Desbalance de clases (con citas de al menos 2 artículos)
-- [ ] Revisión final y formalidad de redacción
-- [ ] Exportar a PDF (entrega requiere .ipynb + .pdf)
