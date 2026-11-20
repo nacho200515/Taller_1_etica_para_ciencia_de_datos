@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Datos que importan</title>
+<meta name="description" content="Proyecto semestral ETI195 – Ética para Ciencia de Datos: activismo de datos con un dataset de predicción de cáncer de mama.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #fbf8f6;
+    --surface: #ffffff;
+    --surface-2: #f3eeea;
+    --text: #1d1b1a;
+    --text-2: #57524e;
+    --muted: #8a837d;
+    --rule: #e6dfd9;
+    --accent: #b0386a;
+    --accent-soft: #f6e3eb;
+    --series-1: #2a78d6;
+    --grid: #ece7e2;
+    --todo-bg: #fff7e0;
+    --todo-border: #e0b84a;
+    --todo-text: #6b5210;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #161514;
+      --surface: #1f1d1c;
+      --surface-2: #282524;
+      --text: #f0ece8;
+      --text-2: #c4bdb6;
+      --muted: #8f8780;
+      --rule: #34302d;
+      --accent: #e87ba4;
+      --accent-soft: #3a2430;
+      --series-1: #3987e5;
+      --grid: #2d2a28;
+      --todo-bg: #2e2716;
+      --todo-border: #8a6d1c;
+      --todo-text: #f0d68a;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #161514;
+    --surface: #1f1d1c;
+    --surface-2: #282524;
+    --text: #f0ece8;
+    --text-2: #c4bdb6;
+    --muted: #8f8780;
+    --rule: #34302d;
+    --accent: #e87ba4;
+    --accent-soft: #3a2430;
+    --series-1: #3987e5;
+    --grid: #2d2a28;
+    --todo-bg: #2e2716;
+    --todo-border: #8a6d1c;
+    --todo-text: #f0d68a;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 400 17px/1.65 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+
+  header.hero {
+    padding: 72px 0 48px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .eyebrow {
+    font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 16px;
+  }
+  h1, h2, h3 { font-family: Fraunces, Georgia, serif; font-weight: 650; line-height: 1.15; margin: 0; }
+  h1 { font-size: clamp(36px, 7vw, 56px); letter-spacing: -.01em; }
+  .lede { font-size: 19px; color: var(--text-2); margin: 20px 0 0; max-width: 60ch; }
+  .meta { margin-top: 28px; font-size: 14px; color: var(--muted); }
+  .meta strong { color: var(--text-2); font-weight: 500; }
+
+  nav.toc {
+    display: flex; flex-wrap: wrap; gap: 8px 20px;
+    padding: 18px 0; border-bottom: 1px solid var(--rule); font-size: 14px;
+  }
+  nav.toc a { color: var(--text-2); text-decoration: none; }
+  nav.toc a:hover { color: var(--accent); }
+
+  section { padding: 56px 0; border-bottom: 1px solid var(--rule); }
+  section:last-of-type { border-bottom: 0; }
+  .num { font-family: Fraunces, Georgia, serif; color: var(--accent); font-size: 15px; margin-bottom: 8px; display: block; }
+  h2 { font-size: clamp(26px, 5vw, 34px); margin-bottom: 20px; }
+  h3 { font-size: 20px; margin: 0 0 6px; }
+  p { margin: 0 0 16px; }
+  a { color: var(--accent); }
+
+  /* Espacios para completar */
+  .todo {
+    background: var(--todo-bg);
+    border: 1.5px dashed var(--todo-border);
+    color: var(--todo-text);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 15px;
+    margin: 0 0 16px;
+  }
+  .todo::before { content: "Por completar · "; font-weight: 600; }
+
+  /* Tarjetas de talleres */
+  .talleres { display: grid; gap: 14px; grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .talleres { grid-template-columns: 1fr 1fr; } }
+  .card {
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 20px;
+  }
+  .card .tag { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .card .todo { margin: 12px 0 0; font-size: 14px; }
+
+  /* Gráfico */
+  figure.viz {
+    margin: 8px 0 24px; background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 14px; padding: 20px 16px 16px; position: relative;
+  }
+  .viz-title { font-weight: 600; font-size: 16px; margin: 0 0 4px; }
+  .viz-sub { font-size: 14px; color: var(--text-2); margin: 0 0 16px; }
+  .viz svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .viz .panel-label { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; fill: var(--muted); }
+  .viz .row-label { font-size: 13px; fill: var(--text); }
+  .viz .row-label.ref { fill: var(--text-2); }
+  .viz .tick { font-size: 11px; fill: var(--muted); }
+  .viz .grid { stroke: var(--grid); stroke-width: 1; }
+  .viz .axis { stroke: var(--rule); stroke-width: 1; }
+  .viz .ci { stroke: var(--series-1); stroke-width: 2; stroke-linecap: round; opacity: .45; }
+  .viz .dot { fill: var(--series-1); stroke: var(--surface); stroke-width: 2; }
+  .viz .dot.ref { fill: var(--surface); stroke: var(--series-1); stroke-width: 2; }
+  .viz .val { font-size: 12px; fill: var(--text-2); font-variant-numeric: tabular-nums; }
+  .viz .hit { fill: transparent; cursor: default; }
+  .viz .hit:hover + g .dot, .viz g.row:hover .dot { r: 7; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--text-2); margin-top: 10px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .sw { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+  .sw.fill { background: var(--series-1); }
+  .sw.hollow { border: 2px solid var(--series-1); }
+  .sw.line { width: 20px; height: 2px; border-radius: 1px; background: var(--series-1); opacity: .45; }
+  .tooltip {
+    position: absolute; pointer-events: none; background: var(--text); color: var(--bg);
+    font-size: 13px; line-height: 1.45; padding: 8px 10px; border-radius: 8px;
+    opacity: 0; transition: opacity .12s; max-width: 240px; z-index: 2;
+  }
+  .tooltip b { font-weight: 600; }
+  figcaption { font-size: 13px; color: var(--muted); margin-top: 12px; }
+  details.table-view { margin-top: 12px; font-size: 14px; }
+  details.table-view summary { cursor: pointer; color: var(--text-2); }
+  .table-scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; margin-top: 10px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 6px 10px 6px 0; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+  th { font-weight: 600; color: var(--text-2); }
+
+  .closing { background: var(--accent-soft); border-radius: 16px; padding: 28px 22px; }
+
+  footer { padding: 40px 0 64px; font-size: 14px; color: var(--muted); }
+  footer ul { padding-left: 18px; margin: 8px 0 0; }
+  footer li { margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">ETI195 · Ética para Ciencia de Datos · 2026-2</p>
+    <h1>Datos que importan: cáncer de mama y equidad</h1>
+    <p class="lede">Un semestre trabajando con un dataset de predicción de cáncer de mama, mirado desde las pacientes y no solo desde el modelo.</p>
+    <p class="meta">
+      <strong>Integrantes:</strong> Jeferson Alzate Rodríguez · Kamila Ignacia Salas Vargas · Ignacio Mariano Flores Calsina · Andrea Cecilia Riquelme Bugueño
+    </p>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="toc" aria-label="Secciones">
+    <a href="#por-que">1. Por qué este dataset</a>
+    <a href="#recorrido">2. Qué hicimos</a>
+    <a href="#visualizacion">3. Visualización</a>
+    <a href="#conclusion">4. Conclusión</a>
+  </nav>
+</div>
+
+<main class="wrap">
+
+  <!-- ============ 1. TEXTO INICIAL ============ -->
+  <section id="por-que">
+    <span class="num">01</span>
+    <h2>Por qué elegimos este dataset</h2>
+
+    <!-- REEMPLAZAR cada <p class="todo"> por <p> con su texto -->
+    <p class="todo">Qué dataset eligieron: Breast Cancer Prediction Dataset de Kaggle (10.000 pacientes sintéticas, 23 variables clínicas, demográficas y de hábitos).</p>
+    <p class="todo">Por qué lo eligieron como grupo.</p>
+    <p class="todo">Por qué importa: qué está en juego para las pacientes cuando un modelo apoya un diagnóstico de cáncer.</p>
+
+    <p><a href="https://www.kaggle.com/datasets/mobeenfatimah/breast-cancer-prediction-dataset-10000-patient">Ver el dataset en Kaggle</a></p>
+  </section>
+
+  <!-- ============ 2. RECORRIDO POR LOS TALLERES ============ -->
+  <section id="recorrido">
+    <span class="num">02</span>
+    <h2>Qué nos preguntamos y qué descubrimos</h2>
+    <p class="todo">Una o dos frases que conecten los cuatro talleres.</p>
+
+    <div class="talleres">
+      <article class="card">
+        <span class="tag">Taller 1</span>
+        <h3>Exploración de los datos</h3>
+        <p class="todo">Pregunta y hallazgo principal.</p>
+      </article>
+      <article class="card">
+        <span class="tag">Taller 2</span>
+        <h3>Sesgos y fairness</h3>
+        <p class="todo">Pregunta y hallazgo principal.</p>
+      </article>
+      <article class="card">
+        <span class="tag">Taller 3</span>
+        <h3>Explicabilidad (LIME y SHAP)</h3>
+        <p class="todo">Pregunta y hallazgo principal.</p>
+      </article>
+      <article class="card">
+        <span class="tag">Taller 4</span>
+        <h3>Derechos humanos y privacidad</h3>
+        <p class="todo">Pregunta y hallazgo principal.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ 3. VISUALIZACIÓN ============ -->
+  <section id="visualizacion">
+    <span class="num">03</span>
+    <h2>Lo que el accuracy no muestra</h2>
+
+    <figure class="viz" id="viz">
+      <p class="viz-title">Tasa de falsos negativos por grupo</p>
+      <p class="viz-sub">Proporción de pacientes con cáncer que el árbol de decisión no detectó (datos de prueba, n = 1.940). Accuracy global: 99,07 %.</p>
+      <svg id="fnr-chart" role="img" aria-labelledby="fnr-desc"></svg>
+      <p id="fnr-desc" hidden>Gráfico de puntos con intervalos de confianza al 95 %. Por edad: adulta 2,2 %, adulta mayor 2,6 %, joven 9,8 %. Por ingreso: alto 2,6 %, bajo 3,2 %, medio 4,7 %.</p>
+      <div class="legend" aria-hidden="true">
+        <span><i class="sw fill"></i>Tasa de falsos negativos</span>
+        <span><i class="sw hollow"></i>Grupo de referencia</span>
+        <span><i class="sw line"></i>Intervalo de confianza 95 % (Wilson)</span>
+      </div>
+      <div class="tooltip" id="tip" role="status"></div>
+      <details class="table-view">
+        <summary>Ver como tabla</summary>
+        <div class="table-scroll">
+          <table id="fnr-table">
+            <thead><tr><th>Atributo</th><th>Grupo</th><th>No detectadas / con cáncer</th><th>Tasa</th><th>IC 95 %</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </details>
+      <figcaption>Fuente: Taller 2, métricas de Aequitas sobre el árbol de decisión. Edad: joven 20–39, adulta 40–59, adulta mayor 60+. Ingreso anual (USD): bajo &lt; 50.000, medio 50.000–99.999, alto ≥ 100.000.</figcaption>
+    </figure>
+
+    <p class="todo">Qué hicieron con esta visualización: qué muestra, cómo leerla y qué concluyeron.</p>
+    <p class="todo">Por qué esto importa desde el activismo de datos.</p>
+  </section>
+
+  <!-- ============ 4. CONCLUSIÓN ============ -->
+  <section id="conclusion">
+    <span class="num">04</span>
+    <h2>Conclusión</h2>
+    <div class="closing">
+      <p class="todo">Conclusión final del proyecto como activismo de datos.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <strong>Referencias</strong>
+  <ul>
+    <li>mobeenfatimah. (s. f.). <em>Breast cancer prediction dataset (10,000 patients)</em> [Conjunto de datos]. Kaggle. https://www.kaggle.com/datasets/mobeenfatimah/breast-cancer-prediction-dataset-10000-patient</li>
+    <li>Saleiro, P., Kuester, B., Hinkson, L., London, J., Stevens, A., Anisfeld, A., Rodolfa, K. T., &amp; Ghani, R. (2018). <em>Aequitas: A bias and fairness audit toolkit</em>. arXiv. https://arxiv.org/abs/1811.05577</li>
+    <li class="todo">Agregar las demás referencias que usen (APA 7).</li>
+  </ul>
+  <p style="margin-top:20px">Proyecto del curso ETI195, Pontificia Universidad Católica de Chile.</p>
+</footer>
+
+<script>
+(function () {
+  // Resultados del Taller 2 (crosstabs de Aequitas + IC de Wilson)
+  var data = [
+    { attr: "Edad",    group: "Adulta",       ref: true,  fn: 2, pos: 91,  lo: 0.006048, hi: 0.076632 },
+    { attr: "Edad",    group: "Adulta mayor", ref: false, fn: 6, pos: 235, lo: 0.011753, hi: 0.054573 },
+    { attr: "Edad",    group: "Joven",        ref: false, fn: 5, pos: 51,  lo: 0.042608, hi: 0.209782 },
+    { attr: "Ingreso", group: "Alto",         ref: true,  fn: 4, pos: 155, lo: 0.010080, hi: 0.064469 },
+    { attr: "Ingreso", group: "Bajo",         ref: false, fn: 3, pos: 93,  lo: 0.011031, hi: 0.090594 },
+    { attr: "Ingreso", group: "Medio",        ref: false, fn: 6, pos: 129, lo: 0.021489, hi: 0.097762 }
+  ];
+  data.forEach(function (d) { d.rate = d.fn / d.pos; });
+
+  var pct = function (v, dec) { return (v * 100).toFixed(dec == null ? 1 : dec).replace(".", ",") + " %"; };
+
+  // Tabla
+  var tbody = document.querySelector("#fnr-table tbody");
+  data.forEach(function (d) {
+    var tr = document.createElement("tr");
+    tr.innerHTML = "<td>" + d.attr + "</td><td>" + d.group + (d.ref ? " (ref.)" : "") + "</td><td>" +
+      d.fn + " / " + d.pos + "</td><td>" + pct(d.rate) + "</td><td>" + pct(d.lo) + " – " + pct(d.hi) + "</td>";
+    tbody.appendChild(tr);
+  });
+
+  // Gráfico
+  var svg = document.getElementById("fnr-chart");
+  var NS = "http://www.w3.org/2000/svg";
+  var W = 680, labelW = 120, rightPad = 16, rowH = 34, panelGap = 22, panelHead = 22, axisH = 28;
+  var maxX = 0.25;
+  var plotW = W - labelW - rightPad;
+  var x = function (v) { return labelW + (v / maxX) * plotW; };
+  var attrs = ["Edad", "Ingreso"];
+  var H = attrs.length * (panelHead + 3 * rowH) + (attrs.length - 1) * panelGap + axisH;
+  svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+
+  function el(name, a, parent) {
+    var n = document.createElementNS(NS, name);
+    for (var k in a) n.setAttribute(k, a[k]);
+    (parent || svg).appendChild(n);
+    return n;
+  }
+
+  var plotTop = 0, plotBottom = H - axisH;
+  // grilla vertical
+  [0, 0.05, 0.10, 0.15, 0.20, 0.25].forEach(function (t) {
+    el("line", { x1: x(t), x2: x(t), y1: panelHead - 6, y2: plotBottom, "class": t === 0 ? "axis" : "grid" });
+    var tx = el("text", { x: x(t), y: H - 8, "text-anchor": "middle", "class": "tick" });
+    tx.textContent = Math.round(t * 100) + " %";
+  });
+
+  var tip = document.getElementById("tip");
+  var fig = document.getElementById("viz");
+
+  var y0 = plotTop;
+  attrs.forEach(function (attr) {
+    var lbl = el("text", { x: 0, y: y0 + 14, "class": "panel-label" });
+    lbl.textContent = attr;
+    var rows = data.filter(function (d) { return d.attr === attr; });
+    rows.forEach(function (d, i) {
+      var cy = y0 + panelHead + i * rowH + rowH / 2;
+      var g = el("g", { "class": "row" });
+      var name = el("text", { x: 0, y: cy + 4, "class": "row-label" + (d.ref ? " ref" : "") }, g);
+      name.textContent = d.group + (d.ref ? " (ref.)" : "");
+      el("line", { x1: x(d.lo), x2: x(d.hi), y1: cy, y2: cy, "class": "ci" }, g);
+      el("circle", { cx: x(d.rate), cy: cy, r: 6, "class": "dot" + (d.ref ? " ref" : "") }, g);
+      var v = el("text", { x: x(d.hi) + 8, y: cy + 4, "class": "val" }, g);
+      v.textContent = pct(d.rate);
+      var hit = el("rect", { x: 0, y: cy - rowH / 2, width: W, height: rowH, "class": "hit" }, g);
+
+      function show(evt) {
+        tip.innerHTML = "<b>" + d.attr + " · " + d.group + (d.ref ? " (referencia)" : "") + "</b><br>" +
+          "No detectadas: " + d.fn + " de " + d.pos + "<br>" +
+          "Tasa: " + pct(d.rate) + "<br>IC 95 %: " + pct(d.lo) + " – " + pct(d.hi);
+        var box = fig.getBoundingClientRect();
+        var svgBox = svg.getBoundingClientRect();
+        var scale = svgBox.width / W;
+        var left = svgBox.left - box.left + x(d.rate) * scale + 12;
+        var top = svgBox.top - box.top + cy * scale - 10;
+        tip.style.opacity = 1;
+        var tw = tip.offsetWidth;
+        if (left + tw > box.width - 8) left = svgBox.left - box.left + x(d.rate) * scale - tw - 12;
+        tip.style.left = Math.max(8, left) + "px";
+        tip.style.top = top + "px";
+      }
+      hit.addEventListener("mouseenter", show);
+      hit.addEventListener("mousemove", show);
+      hit.addEventListener("touchstart", show, { passive: true });
+      hit.addEventListener("mouseleave", function () { tip.style.opacity = 0; });
+    });
+    y0 += panelHead + 3 * rowH + panelGap;
+  });
+})();
+</script>
+</body>
+</html>
